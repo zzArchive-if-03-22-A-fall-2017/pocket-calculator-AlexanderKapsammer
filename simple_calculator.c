@@ -5,28 +5,39 @@ double Add();
 double Subtract();
 double Multiply();
 double Divide();
- int Get_input();
+int Get_input();
+
 int main(int argc, char const *argv[]) {
   int choice;
-  choice = Get_input();
-  if (choice != -1) {
-    double result;
-    result = Calculate(choice);
-    printf("\nResult: %.2lf\n",result);
-  }
+  do {
+    choice = Get_input();
+    if (choice != -1) {
+      double result;
+      result = Calculate(choice);
+      printf("\nResult: %.2lf\n",result);}
+  } while(choice != -1);
+
+
 
   return 0;
 }
+
 int Get_input() {
   int choice;
+
+  printf("Simple calculator\n\n");
+  printf("Choose one of the following operations:\n   Add (1)\n   Subtract (2)\n   Multiply (3)\n   Divide (4)\n   Stop Program (-1)\nEnter your choice: ");
   do {
-    printf("Simple calculator\n\n");
-    printf("Choose one of the following operations:\n   Add (1)\n   Subtract (2)\n   Multiply (3)\n   Divide (4)\n   Stop Program (-1)\nEnter your choice: ");
     scanf("%d", &choice);
     printf("\n");
+    if (Choice_is_possible(choice) == 0) {
+      printf("Impossible choice\n");
+      printf("Enter your choice: ");
+    }
   } while(Choice_is_possible(choice) == 0);
   return choice;
 }
+
 int Choice_is_possible(int choice) {
   int possible = 0;
   if (choice == 1 || choice == 2 || choice == 3 || choice == 4 || choice == -1) {
@@ -34,6 +45,7 @@ int Choice_is_possible(int choice) {
   }
   return possible;
 }
+
 double Calculate(int choice) {
   double result;
   switch (choice) {
@@ -72,6 +84,9 @@ double Divide(){
   do {
     printf("Please enter the second operand: ");
     scanf("%lf",&operand2);
+    if (operand2 == 0) {
+      printf("divide by zero\n");
+    }
   } while(operand2 == 0);
   return (operand1 / operand2);
 }
